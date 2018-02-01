@@ -91,7 +91,7 @@ imports:
   subpackages:
   - keys
 - name: github.com/tendermint/go-wire
-  version: c7801c1586f51bb28028cd420c599516d7ac9c36
+  version: 27be46e25124ddf775e23317a83647ce62a93f6b
   subpackages:
   - data
 - name: github.com/tendermint/iavl
@@ -119,7 +119,7 @@ imports:
   - state
   - types
 - name: github.com/tendermint/tmlibs
-  version: 80029abc6e20f85079cd751e659a05508773288c
+  version: e3a765b19c4af1cc5c6e2c4051847898bb3aa5d3
   subpackages:
   - cli
   - cli/flags
@@ -132,6 +132,7 @@ imports:
   - merkle
   - pubsub
   - pubsub/query
+  - rational
 - name: golang.org/x/crypto
   version: edd5e9b0879d13ee6970a50153d85b8fec9f7686
   subpackages:
