@@ -21,7 +21,7 @@ var mainHeaderKey = []byte("header")
 
 // The ABCI application
 type BaseApp struct {
-	logger log.Logger
+	Logger log.Logger
 
 	// Application name from abci.Info
 	name string
@@ -66,7 +66,7 @@ var _ abci.Application = &BaseApp{}
 // Create and name new BaseApp
 func NewBaseApp(name string) *BaseApp {
 	var baseapp = &BaseApp{
-		logger: makeDefaultLogger(),
+		Logger: makeDefaultLogger(name),
 		name:   name,
 		db:     nil,
 		cms:    nil,
@@ -358,7 +358,7 @@ func (app *BaseApp) EndBlock(req abci.RequestEndBlock) (res abci.ResponseEndBloc
 func (app *BaseApp) Commit() (res abci.ResponseCommit) {
 	app.msDeliver.Write()
 	commitID := app.cms.Commit()
-	app.logger.Debug("Commit synced",
+	app.Logger.Debug("Commit synced",
 		"commit", commitID,
 	)
 	return abci.ResponseCommit{
@@ -386,9 +386,11 @@ func pubKeyIndex(val *abci.Validator, list []*abci.Validator) int {
 	return -1
 }
 
-// Make a simple default logger
+// Make a simple default Logger
 // TODO: Make log capturable for each transaction, and return it in
 // ResponseDeliverTx.Log and ResponseCheckTx.Log.
-func makeDefaultLogger() log.Logger {
-	return log.NewTMLogger(log.NewSyncWriter(os.Stdout)).With("module", "sdk/app")
+func makeDefaultLogger(name string) log.Logger {
+	return log.NewTMLogger(
+		log.NewSyncWriter(os.Stdout)).
+		With("app", name)
 }
